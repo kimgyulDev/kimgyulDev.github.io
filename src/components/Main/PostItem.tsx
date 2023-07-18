@@ -1,28 +1,22 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
 import { Link } from 'gatsby'
+import { PostFrontmatterType } from 'types/PostItem.types'
 
-type PostItemProps = {
-  title: string
-  date: string
-  tags: string[]
-  summary: string
-  thumbnail: string
-  link: string
-}
+type PostItemProps = PostFrontmatterType & { link: string }
 
 const PostItemWrapper = styled(Link)`
   display: flex;
-width: 100%;
-justify-content: space-evenly;
-height: 100px;
+  width: 100%;
+  justify-content: space-evenly;
+  height: 130px;
   }
 `
 const ThumbnailImage = styled.img`
   width: 150px;
   height: 100%;
   object-fit: cover;
-  margin-left: 50px;
+  margin-left: 60px;
 `
 const PostItemContent = styled.div`
   width: 100%;
@@ -38,7 +32,7 @@ const Title = styled.div`
   overflow-wrap: break-word;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-size: 18px;
+  font-size: 23px;
   font-weight: 700;
 `
 const Date = styled.div`
@@ -52,14 +46,18 @@ const TopItem = styled.div`
   align-items: flex-start;
   gap: 3px;
 `
+const PostTagList = styled.div`
+  display: flex;
+  width: 25%;
+`
 const Tag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 9px;
   background: #deebff;
-  width: 50px;
   margin-bottom: 10px;
+  margin-right: 10px;
 `
 const TagItem = styled.div`
   margin: 2px 6px;
@@ -67,18 +65,19 @@ const TagItem = styled.div`
   color: #4e87dd;
   font-size: 9px;
   font-weight: 500;
+  letter-spacing: 0.5px;
 `
 const Summary = styled.div`
   display: -webkit-box;
-  overflow: hidden;
   margin: 10px 0;
   text-overflow: ellipsis;
   white-space: normal;
   overflow-wrap: break-word;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-size: 13px;
+  font-size: 14px;
   opacity: 0.8;
+  letter-spacing: 0.5px;
 `
 
 const PostItem: FunctionComponent<PostItemProps> = function ({
@@ -86,7 +85,7 @@ const PostItem: FunctionComponent<PostItemProps> = function ({
   date,
   tags,
   summary,
-  thumbnail,
+  thumbnail: { publicURL },
   link,
 }) {
   return (
@@ -97,11 +96,15 @@ const PostItem: FunctionComponent<PostItemProps> = function ({
           <Date>{date}</Date>
         </TopItem>
         <Summary>{summary}</Summary>
-        <Tag>
-          <TagItem>{tags}</TagItem>
-        </Tag>
+        <PostTagList>
+          {tags.map((tag, i) => (
+            <Tag>
+              <TagItem>{tags[i]}</TagItem>
+            </Tag>
+          ))}
+        </PostTagList>
       </PostItemContent>
-      <ThumbnailImage src={thumbnail}></ThumbnailImage>
+      <ThumbnailImage src={publicURL}></ThumbnailImage>
     </PostItemWrapper>
   )
 }

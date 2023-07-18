@@ -9,6 +9,21 @@ import Footer from 'components/Common/Footer'
 import TagList from 'components/Main/TagList'
 import PostList from 'components/Main/PostList'
 
+import { graphql } from 'gatsby'
+import { PostListItemType } from 'types/PostItem.types'
+import queryString, { ParsedQuery } from 'query-string'
+
+type IndexPageProps = {
+  location: {
+    search: string
+  }
+  data: {
+    allMarkdownRemark: {
+      edges: PostListItemType[]
+    }
+  }
+}
+
 const TAG_LIST = {
   All: 5,
   Javascript: 3,
@@ -18,10 +33,11 @@ const TAG_LIST = {
 const Container = stlyed.div`
   display: flex;
   // flex-direction: column;
-  height: 100%;
-  padding: 0 200px;
+  height: 100vh;
+  padding: 0 15em;
   position: relative;
-  top: 80px;
+  top: 8em;
+  margin-bottom: 100px;
 `
 const LeftLayout = stlyed.div`
   margin-right: 100px;
@@ -32,7 +48,16 @@ const RightLayout = stlyed.div`
   height: 50%;
 `
 
-const IndexPage: FunctionComponent = function () {
+const IndexPage: FunctionComponent<IndexPageProps> = function ({
+  location: { search },
+  data: {
+    allMarkdownRemark: { edges },
+  },
+}) {
+  const parsed: ParsedQuery<string> = queryString.parse(search)
+  const selectedTag: string =
+    typeof parsed.tag !== 'string' || !parsed.tag ? 'All' : parsed.tag
+
   return (
     <>
       <Header />
@@ -41,14 +66,37 @@ const IndexPage: FunctionComponent = function () {
         <LeftLayout>
           <Introduction />
         </LeftLayout>
-        <PostList />
+        <PostList posts={edges} />
         <RightLayout>
-          <TagList selectedTag="All" tagList={TAG_LIST} />
+          <TagList selectedTag={selectedTag} tagList={TAG_LIST} />
         </RightLayout>
       </Container>
       <Footer />
     </>
   )
 }
+
+export const getPostList = graphql`
+  query getPostList {
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date, frontmatter___title] }
+    ) {
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            summary
+            date(formatString: "YYYY.MM.DD.")
+            tags
+            thumbnail {
+              publicURL
+            }
+          }
+        }
+      }
+    }
+  }
+`
 
 export default IndexPage
