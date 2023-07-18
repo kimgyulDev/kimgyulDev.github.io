@@ -29,7 +29,7 @@ const TagListWapper = styled.div`
 const Tag = styled.div`
   color: #4e87dd;
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 17px;
 `
 const TagItemList = styled.div`
@@ -50,7 +50,7 @@ const TagItem = styled(({ active, ...props }: GatsbyLinkProps) => (
   gap: 5px;
   color: rgba(50, 93, 157, 0.49);
   font-size: 14px;
-  font-weight: ${({ active }) => (active ? '800' : '400')};
+  font-weight: ${({ active }) => (active ? '700' : '400')};
 `
 
 const TagList: FunctionComponent<TagListProps> = function ({

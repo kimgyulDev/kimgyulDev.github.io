@@ -12,7 +12,9 @@ const HeaderWrapper = styled.nav`
   flex-shrink: 0;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
-  padding: 0 200px;
+  padding: 0 15em;
+  position: fixed;
+  z-index: 1;
 `
 const BlogNameWrapper = css`
   display: flex;
