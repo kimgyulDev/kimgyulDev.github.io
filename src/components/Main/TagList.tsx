@@ -23,7 +23,7 @@ const TagListWapper = styled.div`
   text-align: right;
   display: flex;
   flex-direction: column;
-  height: 50px;
+  height: 100px;
   width: 10em;
 `
 
