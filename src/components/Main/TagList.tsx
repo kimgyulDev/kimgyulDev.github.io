@@ -23,7 +23,8 @@ const TagListWapper = styled.div`
   text-align: right;
   display: flex;
   flex-direction: column;
-  height: 100px;
+  height: 50px;
+  width: 10em;
 `
 
 const Tag = styled.div`
@@ -68,7 +69,7 @@ const TagList: FunctionComponent<TagListProps> = function ({
               active={name === selectedTag}
               key={name}
             >
-              {name}({count})
+              {name} ({count})
             </TagItem>
           )
         })}

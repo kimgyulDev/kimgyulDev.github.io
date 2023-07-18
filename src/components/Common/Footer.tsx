@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, memo } from 'react'
 import styled from '@emotion/styled'
 
 const FooterWrapper = styled.div`
@@ -12,13 +12,13 @@ const FooterWrapper = styled.div`
   opacity: 50%;
 `
 
-const Footer: FunctionComponent = function () {
+const Footer: FunctionComponent = memo(() => {
   return (
     <FooterWrapper>
       Thank You for Visiting My Blog, Have a Good Day 😆
       <br />© 2023 Developer Jiyul, Powered By Gatsby.
     </FooterWrapper>
   )
-}
+})
 
 export default Footer
